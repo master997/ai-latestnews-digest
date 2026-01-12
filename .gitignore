@@ -42,5 +42,4 @@ env/
 .DS_Store
 Thumbs.db
 
-# Generated digests (optional - remove this line if you want to track digests)
-digests/
+# Generated digests are tracked for GitHub viewing
