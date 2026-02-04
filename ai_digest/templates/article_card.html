@@ -1,0 +1,18 @@
+<div class="article-card">
+    <h3><a href="{{ article.link }}" target="_blank" rel="noopener">{{ article.title }}</a></h3>
+    <div class="article-meta">
+        <span class="source">{{ article.source }}</span>
+        {% if article.published %}
+        <span class="date">{{ article.published.strftime('%Y-%m-%d') }}</span>
+        {% endif %}
+        <span class="relevance" title="Relevance: {{ '%.0f'|format(article.relevance_score * 100) }}%">
+            {{ '%.0f'|format(article.relevance_score * 100) }}%
+            <span class="relevance-bar-bg">
+                <span class="relevance-bar" style="width: {{ (article.relevance_score * 100)|int }}%"></span>
+            </span>
+        </span>
+    </div>
+    {% if article.summary %}
+    <p class="summary">{{ article.summary }}</p>
+    {% endif %}
+</div>

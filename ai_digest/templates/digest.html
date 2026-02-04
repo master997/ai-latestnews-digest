@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Digest {{ date }} - AI News Digest{% endblock %}
+{% block content %}
+<h1>AI News Digest &mdash; {{ date }}</h1>
+<p>Topic: <strong>{{ topic }}</strong> &middot; {{ total }} articles</p>
+
+{% if groups.high %}
+<section class="tier tier-high">
+    <h2>Highly Relevant</h2>
+    {% for article in groups.high %}
+        {% include "article_card.html" %}
+    {% endfor %}
+</section>
+{% endif %}
+
+{% if groups.medium %}
+<section class="tier tier-medium">
+    <h2>Related</h2>
+    {% for article in groups.medium %}
+        {% include "article_card.html" %}
+    {% endfor %}
+</section>
+{% endif %}
+
+{% if groups.other %}
+<section class="tier tier-other">
+    <h2>Other News</h2>
+    {% for article in groups.other %}
+        {% include "article_card.html" %}
+    {% endfor %}
+</section>
+{% endif %}
+{% endblock %}
