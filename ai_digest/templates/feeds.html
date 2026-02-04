@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Feeds - AI News Digest{% endblock %}
+{% block content %}
+<h1>Configured Feeds</h1>
+<div class="feed-list">
+    {% for feed in feeds %}
+    <div class="feed-card {{ 'disabled' if not feed.get('enabled', True) }}">
+        <h3>{{ feed.name }}</h3>
+        <a href="{{ feed.url }}" class="feed-url" target="_blank" rel="noopener">{{ feed.url }}</a>
+        <span class="feed-status">{{ 'Enabled' if feed.get('enabled', True) else 'Disabled' }}</span>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

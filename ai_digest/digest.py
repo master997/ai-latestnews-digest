@@ -1,10 +1,65 @@
 """Markdown digest generator module."""
 
+import json
 import os
 from datetime import datetime
 from pathlib import Path
 
 from .scraper import Article
+
+
+def group_articles(articles: list[Article]) -> dict[str, list[Article]]:
+    """
+    Sort and group articles by relevance tier.
+
+    Returns:
+        Dict with keys 'high', 'medium', 'other', each containing
+        a list of Article objects sorted by relevance_score descending.
+    """
+    sorted_articles = sorted(
+        articles,
+        key=lambda x: x.relevance_score,
+        reverse=True
+    )
+    return {
+        "high": [a for a in sorted_articles if a.relevance_score >= 0.7],
+        "medium": [a for a in sorted_articles if 0.4 <= a.relevance_score < 0.7],
+        "other": [a for a in sorted_articles if a.relevance_score < 0.4],
+    }
+
+
+def save_digest_json(
+    articles: list[Article],
+    topic: str,
+    output_dir: str = "./digests"
+) -> str:
+    """Save article data as JSON for web UI consumption."""
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
+    date_str = datetime.now().strftime("%Y-%m-%d")
+    filepath = os.path.join(output_dir, f"digest_{date_str}.json")
+
+    data = {
+        "date": date_str,
+        "topic": topic,
+        "generated": datetime.now().isoformat(),
+        "articles": [
+            {
+                "title": a.title,
+                "link": a.link,
+                "source": a.source,
+                "published": a.published.isoformat() if a.published else None,
+                "description": a.description,
+                "summary": a.summary,
+                "relevance_score": a.relevance_score,
+            }
+            for a in articles
+        ],
+    }
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+    return filepath
 
 
 def generate_digest(
@@ -31,12 +86,11 @@ def generate_digest(
     filename = f"digest_{date_str}.md"
     filepath = os.path.join(output_dir, filename)
 
-    # Sort articles by relevance score (highest first)
-    sorted_articles = sorted(
-        articles,
-        key=lambda x: x.relevance_score,
-        reverse=True
-    )
+    # Group articles by relevance tier
+    groups = group_articles(articles)
+    high_relevance = groups["high"]
+    medium_relevance = groups["medium"]
+    other = groups["other"]
 
     # Build markdown content
     lines = [
@@ -47,14 +101,9 @@ def generate_digest(
         "",
         "---",
         "",
-        f"## Top Stories ({len(sorted_articles)} articles)",
+        f"## Top Stories ({len(articles)} articles)",
         "",
     ]
-
-    # Group articles by relevance tier
-    high_relevance = [a for a in sorted_articles if a.relevance_score >= 0.7]
-    medium_relevance = [a for a in sorted_articles if 0.4 <= a.relevance_score < 0.7]
-    other = [a for a in sorted_articles if a.relevance_score < 0.4]
 
     if high_relevance:
         lines.append("### Highly Relevant")
@@ -85,6 +134,9 @@ def generate_digest(
     content = "\n".join(lines)
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)
+
+    # Also save JSON sidecar for web UI
+    save_digest_json(articles, topic, output_dir)
 
     return filepath
 

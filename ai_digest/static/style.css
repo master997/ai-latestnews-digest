@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+nav {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.nav-links a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}
+
+.nav-form {
+    display: inline;
+}
+
+.btn-generate {
+    background: #4361ee;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn-generate:hover {
+    background: #3a56d4;
+}
+
+main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+h1 {
+    margin-bottom: 0.3rem;
+    font-size: 1.8rem;
+}
+
+h1 + p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+/* Flash messages */
+.flash {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+}
+
+/* Home page digest list */
+.digest-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.digest-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.15s;
+}
+
+.digest-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.digest-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.digest-card p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.empty-state {
+    color: #888;
+    font-style: italic;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+/* Relevance tier sections */
+.tier {
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left: 4px solid #ccc;
+}
+
+.tier h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    color: #555;
+}
+
+.tier-high {
+    border-left-color: #2ecc71;
+}
+
+.tier-high h2 {
+    color: #27ae60;
+}
+
+.tier-medium {
+    border-left-color: #f1c40f;
+}
+
+.tier-medium h2 {
+    color: #d4ac0d;
+}
+
+.tier-other {
+    border-left-color: #bdc3c7;
+}
+
+/* Article cards */
+.article-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.article-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.article-card h3 a {
+    color: #1a1a2e;
+    text-decoration: none;
+}
+
+.article-card h3 a:hover {
+    color: #4361ee;
+    text-decoration: underline;
+}
+
+.article-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.relevance {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: auto;
+}
+
+.relevance-bar-bg {
+    width: 60px;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.relevance-bar {
+    height: 100%;
+    background: #4361ee;
+    border-radius: 2px;
+}
+
+.tier-high .relevance-bar {
+    background: #2ecc71;
+}
+
+.tier-medium .relevance-bar {
+    background: #f1c40f;
+}
+
+.summary {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Feed list */
+.feed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.feed-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+}
+
+.feed-card.disabled {
+    opacity: 0.5;
+}
+
+.feed-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.feed-url {
+    color: #4361ee;
+    font-size: 0.85rem;
+    word-break: break-all;
+}
+
+.feed-status {
+    display: inline-block;
+    margin-top: 0.3rem;
+    font-size: 0.75rem;
+    color: #27ae60;
+    font-weight: 500;
+}
+
+.feed-card.disabled .feed-status {
+    color: #e74c3c;
+}
